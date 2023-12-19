@@ -6,22 +6,23 @@ import React, {
 import {FilterValueType} from "./App";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 
-type TaskType = {
+export type TaskType = {
   id: string;
   title: string;
   isDone: boolean;
 }
 
 type PropsType = {
+  id: string;
   title: string;
   tasks: Array<TaskType>;
-  removeTask: (taskId: string) => void;
-  deleteAllTask: () => void;
-  changeFilter: (value: FilterValueType) => void;
-  addTask: (title: string) => void;
+  removeTask: (taskId: string, todolistId: string) => void;
+  changeFilter: (value: FilterValueType, todolistId: string) => void;
+  addTask: (title: string, todolistId: string) => void;
   children?: React.ReactNode;
-  changeTaskStatus: (taskId: string, isDone: boolean) => void;
+  changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void;
   filter: FilterValueType;
+  removeTodolist: (todolistId: string) => void;
 }
 
 export const Todolist: React.FC<PropsType> = ({children, ...props}) => {
@@ -34,14 +35,14 @@ export const Todolist: React.FC<PropsType> = ({children, ...props}) => {
   const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     setError(null);
     if (event.charCode === 13) {
-      props.addTask(newTaskTitle);
+      props.addTask(newTaskTitle, props.id);
       setNewTaskTitle('');
     }
   };
 
   const addTask = () => {
     if (newTaskTitle.trim() !== '') {
-      props.addTask(newTaskTitle.trim());
+      props.addTask(newTaskTitle.trim(), props.id);
       setNewTaskTitle('');
     } else {
       setError('Field is required')
@@ -49,23 +50,25 @@ export const Todolist: React.FC<PropsType> = ({children, ...props}) => {
     ;
   };
 
-  const onAllClickHandler = () => props.changeFilter('all');
-  const onActiveClickHandler = () => props.changeFilter('active');
-  const onCompletedClickHandler = () => props.changeFilter('completed');
-  const onFirstThreeTasksClickHandler = () => props.changeFilter('three');
+  const onAllClickHandler = () => props.changeFilter('all', props.id);
+  const onActiveClickHandler = () => props.changeFilter('active', props.id);
+  const onCompletedClickHandler = () => props.changeFilter('completed', props.id);
+
   // const onClickFilterHandler = (value: FilterValueType) => {
   //   props.changeFilter(value);
   // };
 
-  const onDeleteAllTasksClickHandler = () => props.deleteAllTask();
-  const onRemoveTaskHandler = (taskId: string) => {
-    props.removeTask(taskId);
-  };
+  // const onRemoveTaskHandler = (taskId: string) => {
+  //   props.removeTask(taskId, props.id);
+  // };
 
+  const removeTodolist = () => {
+    props.removeTodolist(props.id)
+  }
 
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h3>{props.title} <button onClick={removeTodolist}>✖</button></h3>
       <div>
         <input value={newTaskTitle}
                onChange={onNewTitleChangeHandler}
@@ -80,9 +83,9 @@ export const Todolist: React.FC<PropsType> = ({children, ...props}) => {
       </div>
       <ul ref={listRef}>
         {props.tasks.map((task: TaskType) => {
-          const onRemoveTaskHandler = () => props.removeTask(task.id);
+          const onRemoveTaskHandler = () => props.removeTask(task.id, props.id);
           const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-            props.changeTaskStatus(task.id, event.currentTarget.checked);
+            props.changeTaskStatus(task.id, event.currentTarget.checked, props.id);
           };
 
           return (
@@ -110,10 +113,6 @@ export const Todolist: React.FC<PropsType> = ({children, ...props}) => {
         <button className={props.filter === 'completed' ? 'active-filter' : ''}
                 onClick={onCompletedClickHandler}>Completed
         </button>
-        <button className={props.filter === 'three' ? 'active-filter' : ''}
-                onClick={onFirstThreeTasksClickHandler}>Give 3 first tasks
-        </button>
-        <button onClick={onDeleteAllTasksClickHandler}>Delete all</button>
 
       </div>
       {children}
