@@ -3,6 +3,9 @@ import {FilterValueType} from "./App";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button, Checkbox, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
+import {Styles} from "./__styles";
 
 export type TaskType = {
   id: string;
@@ -26,7 +29,8 @@ type PropsType = {
 }
 
 export const Todolist: React.FC<PropsType> = ({children, ...props}) => {
-  const [listRef] = useAutoAnimate<HTMLUListElement>();
+  // const [listRef] = useAutoAnimate<HTMLUListElement>();
+  const [listRef] = useAutoAnimate<HTMLDivElement>();
   const onAllClickHandler = () => props.changeFilter('all', props.id);
   const onActiveClickHandler = () => props.changeFilter('active', props.id);
   const onCompletedClickHandler = () => props.changeFilter('completed', props.id);
@@ -44,11 +48,13 @@ export const Todolist: React.FC<PropsType> = ({children, ...props}) => {
     <div>
       <h3>
         <EditableSpan title={props.title} onChange={changeTodolistTitle}/>
-        <button onClick={removeTodolist}>✖</button>
+        <IconButton onClick={removeTodolist}>
+          <Delete/>
+        </IconButton>
       </h3>
       <AddItemForm addItem={addTaskWrapper}/>
 
-      <ul ref={listRef}>
+      <div ref={listRef}>
         {props.tasks.map((task: TaskType) => {
           const onRemoveTaskHandler = () => props.removeTask(task.id, props.id);
           const onChangeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -59,31 +65,52 @@ export const Todolist: React.FC<PropsType> = ({children, ...props}) => {
           };
 
           return (
-            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-              <input type="checkbox"
-                     checked={task.isDone}
-                     onChange={onChangeStatusHandler}
+            <div key={task.id} className={task.isDone ? 'is-done' : ''}>
+              <Checkbox checked={task.isDone}
+                        onChange={onChangeStatusHandler}
+                        style={{color: `${Styles.mainColor}`}}
               />
               <EditableSpan title={task.title}
                             onChange={onChangeTitleHandler}
               />
-              <button onClick={onRemoveTaskHandler}>✖️</button>
+              <IconButton onClick={onRemoveTaskHandler}>
+                <Delete/>
+              </IconButton>
 
-            </li>
+
+            </div>
           )
         })}
 
-      </ul>
+      </div>
       <div>
-        <button className={props.filter === 'all' ? 'active-filter' : ''}
-                onClick={onAllClickHandler}>All
-        </button>
-        <button className={props.filter === 'active' ? 'active-filter' : ''}
-                onClick={onActiveClickHandler}>Active
-        </button>
-        <button className={props.filter === 'completed' ? 'active-filter' : ''}
-                onClick={onCompletedClickHandler}>Completed
-        </button>
+        <Button variant={props.filter === 'all' ? 'outlined' : 'text'}
+                onClick={onAllClickHandler}
+                style={{
+                  color: `${Styles.mainColor}`,
+                  borderColor: `${Styles.mainColor}`
+                }}
+        >
+          All
+        </Button>
+        <Button variant={props.filter === 'active' ? 'outlined' : 'text'}
+                onClick={onActiveClickHandler}
+                style={{
+                  color: `${Styles.secondary}`,
+                  borderColor: `${Styles.secondary}`
+                }}
+        >
+          Active
+        </Button>
+        <Button variant={props.filter === 'completed' ? 'outlined' : 'text'}
+                onClick={onCompletedClickHandler}
+                style={{
+                  color: `${Styles.primary}`,
+                  borderColor: `${Styles.primary}`
+                }}
+        >
+          Completed
+        </Button>
 
       </div>
       {children}
