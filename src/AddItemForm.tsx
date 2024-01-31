@@ -15,7 +15,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
   };
   const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     setError(null);
-    if (event.charCode === 13) {
+    if (event.key === 'Enter') {
       props.addItem(newTaskTitle);
       setNewTaskTitle('');
     }
