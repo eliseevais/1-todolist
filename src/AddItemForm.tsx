@@ -1,20 +1,24 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@mui/material";
 import {Styles} from './__styles'
-import {Add, PostAdd} from "@mui/icons-material";
+import {PostAdd} from "@mui/icons-material";
 
 type AddItemFormPropsType = {
   addItem: (title: string) => void;
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+  console.log('AddItemForm called');
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
   const onNewTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(event.currentTarget.value)
   };
   const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    setError(null);
+    if (error !== null) {
+      setError(null);
+    }
+
     if (event.key === 'Enter') {
       props.addItem(newTaskTitle);
       setNewTaskTitle('');
@@ -49,4 +53,4 @@ export function AddItemForm(props: AddItemFormPropsType) {
       </IconButton>
     </div>
   )
-}
+})
