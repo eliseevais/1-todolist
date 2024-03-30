@@ -4,7 +4,7 @@ import {
   removeTaskAC, removeTodolistAC,
   tasksReducer
 } from './tasks-reducer';
-import {TasksStateType} from '../App'
+import {TasksStateType} from '../App/App'
 import {TaskType} from "../Todolist";
 
 let todolistId1: Array<TaskType>

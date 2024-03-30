@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {FilterValueType} from "./App";
+import {FilterValueType} from "./App/App";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
