@@ -1,13 +1,13 @@
 import {useState} from "react";
-import {todolistID01, todolistID02} from "../id-utils";
-import {FilterValueType, TodolistType} from "../App";
+import {todolistId01, todolistId02} from "../id-utils";
 import {v1} from "uuid";
+import {  FilterValueType,  TodolistDomainType} from "../../state/todolists-reducer";
 
 export function useTodolists(onTodolistRemove: (todolistId: string) => void,
                              onTodolistAdded: (id: string) => void) {
-  let [todolists, setTodolists] = useState<Array<TodolistType>>([
-    {id: todolistID01, title: 'What to learn', filter: 'all'},
-    {id: todolistID02, title: 'What to buy', filter: 'all'},
+  let [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
+    {id: todolistId01, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
+    {id: todolistId02, title: 'What to buy', filter: 'all', order: 0, addedDate: ''},
   ]);
 
   function changeFilter(value: FilterValueType, todolistId: string) {
@@ -33,14 +33,16 @@ export function useTodolists(onTodolistRemove: (todolistId: string) => void,
   }
 
   function addTodoList(title: string) {
-    let newTodolistId = v1();
-    let newTodolist: TodolistType = {
-      id: newTodolistId,
+    let newtodolistId = v1();
+    let newTodolist: TodolistDomainType = {
+      id: newtodolistId,
       filter: "all",
-      title: title
+      title: title,
+      order: 0,
+      addedDate: ''
     }
     setTodolists([newTodolist, ...todolists]);
-    onTodolistAdded(newTodolistId)
+    onTodolistAdded(newtodolistId)
   }
 
   return {

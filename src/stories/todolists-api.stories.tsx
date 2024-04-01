@@ -54,7 +54,7 @@ export const CreateTodolist = () => {
 
 export const DeleteTodolist = () => {
   const [state, setState] = useState<any>(null);
-  const [todolistId, setTodolistId] = useState<any>('');
+  const [todolistId, settodolistId] = useState<any>('');
 
   // useEffect(() => {
   //   const todolistId = 'd6f235b4-bb23-4111-97ca-2fb47e31b837'
@@ -68,8 +68,8 @@ export const DeleteTodolist = () => {
         setState(response.data)
       })
   };
-  const onChangeTodolistIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setTodolistId(event.currentTarget.value)
+  const onChangetodolistIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    settodolistId(event.currentTarget.value)
   };
 
   return (
@@ -78,7 +78,7 @@ export const DeleteTodolist = () => {
       <div>
         <input placeholder={'todolistId'}
                value={todolistId}
-               onChange={onChangeTodolistIdHandler}
+               onChange={onChangetodolistIdHandler}
         />
         <button onClick={deleteTodolistHandler}>delete todolist</button>
       </div>
@@ -88,7 +88,7 @@ export const DeleteTodolist = () => {
 
 export const UpdateTodolistTitle = () => {
   const [state, setState] = useState<any>(null);
-  const [todolistId, setTodolistId] = useState<string>('');
+  const [todolistId, settodolistId] = useState<string>('');
   const [todolistTitle, setTodolistTitle] = useState<string>('');
 
   // useEffect(() => {
@@ -104,8 +104,8 @@ export const UpdateTodolistTitle = () => {
         setState(response.data)
       })
   };
-  const onChangeTodolistIDHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setTodolistId(event.currentTarget.value)
+  const onChangetodolistIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    settodolistId(event.currentTarget.value)
   };
   const onChangeTodolistTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTodolistTitle(event.currentTarget.value)
@@ -117,7 +117,7 @@ export const UpdateTodolistTitle = () => {
       <div>
         <input placeholder={'todolistId'}
                value={todolistId}
-               onChange={onChangeTodolistIDHandler}
+               onChange={onChangetodolistIdHandler}
         />
         <input placeholder={'new todolist title'}
                value={todolistTitle}

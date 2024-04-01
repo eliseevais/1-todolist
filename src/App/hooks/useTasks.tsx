@@ -1,23 +1,75 @@
 import {useState} from "react";
-import {todolistID01, todolistID02} from "../id-utils";
+import {todolistId01, todolistId02} from "../id-utils";
 import {v1} from "uuid";
 import {TasksStateType} from "../App";
+import {TaskPriorities, TaskStatuses} from "../../api/tasks-api";
+import {todolistId1, todolistId2} from "../../state/todolists-reducer";
 
 export function useTasks() {
   let [tasksObj, setTasksObj] = useState<TasksStateType>({
-    [todolistID01]: [
-      {id: v1(), title: "HTML&CSS", isDone: true},
-      {id: v1(), title: "JS", isDone: true},
-      {id: v1(), title: "ReactJS", isDone: false},
-      {id: v1(), title: "Rest API", isDone: false},
-      {id: v1(), title: "GraphQL", isDone: false},
+    [todolistId01]: [
+      {
+        id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed,
+        todolistId: todolistId1, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
+      {
+        id: v1(), title: "JS", status: TaskStatuses.Completed,
+        todolistId: todolistId1, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
+      {
+        id: v1(), title: "ReactJS", status: TaskStatuses.Completed,
+        todolistId: todolistId1, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
+      {
+        id: v1(), title: "Rest API", status: TaskStatuses.Completed,
+        todolistId: todolistId1, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
+      {
+        id: v1(), title: "GraphQL", status: TaskStatuses.Completed,
+        todolistId: todolistId1, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
     ],
-    [todolistID02]: [
-      {id: v1(), title: "Milk", isDone: false},
-      {id: v1(), title: "Tea", isDone: false},
-      {id: v1(), title: "Water", isDone: false},
-      {id: v1(), title: "Book", isDone: false},
-      {id: v1(), title: "Paper", isDone: false},
+    [todolistId02]: [
+      {
+        id: v1(), title: "Milk", status: TaskStatuses.Completed,
+        todolistId: todolistId2, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
+      {
+        id: v1(), title: "Tea", status: TaskStatuses.Completed,
+        todolistId: todolistId2, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
+      {
+        id: v1(), title: "Water", status: TaskStatuses.Completed,
+        todolistId: todolistId2, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
+      {
+        id: v1(), title: "Book", status: TaskStatuses.Completed,
+        todolistId: todolistId2, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
+      {
+        id: v1(), title: "Paper", status: TaskStatuses.Completed,
+        todolistId: todolistId2, startDate: '', deadline: '',
+        addedDate: '', order: 0, priority: TaskPriorities.low,
+        description: ''
+      },
     ]
   });
 
@@ -29,18 +81,21 @@ export function useTasks() {
   }
 
   function addTask(title: string, todolistId: string) {
-    let newTask = {id: v1(), title: title, isDone: false};
+    let newTask = {id: v1(), title: title,status: TaskStatuses.New,
+      todolistId: todolistId1, startDate: '', deadline: '',
+      addedDate: '', order: 0, priority: TaskPriorities.low,
+      description: ''};
     let tasks = tasksObj[todolistId];
     let newTasks = [newTask, ...tasks];
     tasksObj[todolistId] = newTasks;
     setTasksObj({...tasksObj});
   }
 
-  function changeTaskStatus(taskId: string, isDone: boolean, todolistId: string) {
+  function changeTaskStatus(taskId: string, status: TaskStatuses, todolistId: string) {
     let tasks = tasksObj[todolistId];
     let task = tasks.find(task => task.id === taskId);
     if (task) {
-      task.isDone = isDone;
+      task.status = TaskStatuses.New;
       setTasksObj({...tasksObj});
     }
   }
@@ -59,10 +114,10 @@ export function useTasks() {
     setTasksObj({...tasksObj});
   }
 
-  function addStateForNewTodolist(newTodolistId: string) {
+  function addStateForNewTodolist(newtodolistId: string) {
     setTasksObj({
       ...tasksObj,
-      [newTodolistId]: []
+      [newtodolistId]: []
     })
   }
 

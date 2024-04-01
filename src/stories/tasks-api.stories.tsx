@@ -7,7 +7,7 @@ export default {
 
 export const GetTasks = () => {
   const [state, setState] = useState<any>(null);
-  const [todolistId, setTodolistId] = useState<string>('');
+  const [todolistId, settodolistId] = useState<string>('');
 
   // useEffect(() => {
   //   const todolistId = '2f0c473e-abae-435f-ae69-6af5d5a19935';
@@ -24,7 +24,7 @@ export const GetTasks = () => {
       })
   };
   const onChangeGetTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setTodolistId(event.currentTarget.value)
+    settodolistId(event.currentTarget.value)
   };
 
   return (
@@ -43,7 +43,7 @@ export const GetTasks = () => {
 
 export const CreateTask = () => {
   const [state, setState] = useState<any>(null);
-  const [todolistId, setTodolistId] = useState<string>('');
+  const [todolistId, settodolistId] = useState<string>('');
   const [taskTitle, setTaskTitle] = useState<string>('');
 
   // useEffect(() => {
@@ -61,8 +61,8 @@ export const CreateTask = () => {
         setState(response.data)
       })
   };
-  const onChangeTodolistIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setTodolistId(event.currentTarget.value)
+  const onChangetodolistIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    settodolistId(event.currentTarget.value)
   };
   const onChangeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTaskTitle(event.currentTarget.value)
@@ -73,7 +73,7 @@ export const CreateTask = () => {
       <div>{JSON.stringify(state)}</div>
       <input placeholder={'todolistId'}
              value={todolistId}
-             onChange={onChangeTodolistIdHandler}
+             onChange={onChangetodolistIdHandler}
       />
       <input placeholder={'task title'}
              value={taskTitle}
@@ -86,7 +86,7 @@ export const CreateTask = () => {
 
 export const DeleteTask = () => {
   const [state, setState] = useState<any>(null);
-  const [todolistId, setTodolistId] = useState<string>('');
+  const [todolistId, settodolistId] = useState<string>('');
   const [taskId, setTaskId] = useState<string>('');
 
   const deleteTaskHandler = () => {
@@ -95,8 +95,8 @@ export const DeleteTask = () => {
         setState(response.data)
       })
   };
-  const onChangeTodolistIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setTodolistId(event.currentTarget.value)
+  const onChangetodolistIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    settodolistId(event.currentTarget.value)
   };
   const onChangeTaskIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTaskId(event.currentTarget.value)
@@ -108,7 +108,7 @@ export const DeleteTask = () => {
       <div>
         <input placeholder={'todolistId'}
                value={todolistId}
-               onChange={onChangeTodolistIdHandler}
+               onChange={onChangetodolistIdHandler}
         />
         <input placeholder={'taskId'}
                value={taskId}
@@ -122,7 +122,7 @@ export const DeleteTask = () => {
 
 export const UpdateTaskTitle = () => {
   const [state, setState] = useState<any>(null);
-  const [todolistId, setTodolistId] = useState<string>('');
+  const [todolistId, settodolistId] = useState<string>('');
   const [taskId, setTaskId] = useState<string>('');
 
   const [taskNewTitle, setTaskNewTitle] = useState<string>('');
@@ -163,7 +163,7 @@ export const UpdateTaskTitle = () => {
       <div>
         <input placeholder={'todolistId'} value={todolistId}
                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                 setTodolistId(e.currentTarget.value)
+                 settodolistId(e.currentTarget.value)
                }}
         />
         <input placeholder={'taskId'} value={taskId}
