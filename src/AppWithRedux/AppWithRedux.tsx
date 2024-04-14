@@ -1,20 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {TaskType} from "../api/tasks-api";
-import '../App.css';
 import {AddItemForm} from "../AddItemForm";
 import {useAppWithRedux} from "./hooks/useAppWithRedux";
+import {fetchTodolistsTC} from "../state/todolists-reducer";
+import '../App.css';
 import {Todolist} from '../Todolist';
+import {Menu} from "@mui/icons-material";
 import {
   AppBar, Button, Container, Grid, IconButton, Paper,
   Toolbar, Typography
 } from "@mui/material";
-import {Menu} from "@mui/icons-material";
+import {useAppDispatch} from "../state/store";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>
 };
 
 const AppWithRedux = () => {
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTodolistsTC())
+  }, []);
 
   const {
     tasksObj,
@@ -26,7 +34,7 @@ const AppWithRedux = () => {
     changeTaskStatus,
     changeTaskTitle,
     removeTodolist,
-    changeTodolistTitle
+    changeTodolistTitle,
   } = useAppWithRedux()
 
   return (

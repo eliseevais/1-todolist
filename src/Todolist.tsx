@@ -1,5 +1,4 @@
-import React, {useCallback} from 'react';
-import {useAutoAnimate} from "@formkit/auto-animate/react";
+import React, {useCallback, useEffect} from 'react';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@mui/material";
@@ -8,6 +7,9 @@ import {Styles} from "./__styles";
 import {Task} from "./Task";
 import {TaskStatuses, TaskType} from "./api/tasks-api";
 import {FilterValueType} from "./state/todolists-reducer";
+import {useDispatch} from "react-redux";
+import {fetchTasksTC} from "./state/tasks-reducer";
+import {useAppDispatch} from "./state/store";
 
 type PropsType = {
   id: string;
@@ -29,7 +31,10 @@ export const Todolist: React.FC<PropsType> = React.memo(({
                                                            ...props
                                                          }) => {
 
-  console.log('Todolist called');
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchTasksTC(props.id))
+  }, []);
 
   const onAllClickHandler = useCallback(
     () => props.changeFilter('all', props.id), [props.changeFilter, props.id]);
