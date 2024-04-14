@@ -17,9 +17,8 @@ import {
   todolistsReducer, removeTodolistAC, FilterValueType
 } from "./state/todolists-reducer";
 import {
-  addTaskAC,
-  changeTaskStatusAC, changeTaskTitleAC,
-  removeTaskAC, tasksReducer
+  addTaskAC, changeTaskTitleAC,
+  removeTaskAC, tasksReducer, updateTaskAC
 } from "./state/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "./api/tasks-api";
 
@@ -121,17 +120,28 @@ function AppWithReducers() {
   }
 
   function addTask(title: string, todolistId: string) {
-    const action = addTaskAC(title, todolistId);
+    const action = addTaskAC({
+      todolistId: todolistId,
+      title: title,
+      status: TaskStatuses.New,
+      addedDate: '',
+      order: 0,
+      priority: TaskPriorities.low,
+      description: '',
+      deadline: '',
+      startDate: '',
+      id: 'testId'
+    });
     dispatchToTasksObjReducer(action)
   }
 
   function changeTaskStatus(taskId: string, status: TaskStatuses, todolistId: string) {
-    const action = changeTaskStatusAC(taskId, status, todolistId);
+    const action = updateTaskAC(taskId, {status}, todolistId);
     dispatchToTasksObjReducer(action)
   }
 
   function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-    const action = changeTaskTitleAC(taskId, newTitle, todolistId);
+    const action = updateTaskAC(taskId, {title: newTitle}, todolistId);
     dispatchToTasksObjReducer(action)
   }
 
@@ -152,7 +162,12 @@ function AppWithReducers() {
   }
 
   function addTodoList(title: string) {
-    const action = addTodolistAC(title);
+    const action = addTodolistAC({
+      id: v1(),
+      title: title,
+      addedDate: '',
+      order: 0
+    });
     dispatchToTasksObjReducer(action);
     dispatchToTodolistsReducer(action);
   }

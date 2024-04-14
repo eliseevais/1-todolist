@@ -7,7 +7,6 @@ import {Styles} from "./__styles";
 import {Task} from "./Task";
 import {TaskStatuses, TaskType} from "./api/tasks-api";
 import {FilterValueType} from "./state/todolists-reducer";
-import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "./state/tasks-reducer";
 import {useAppDispatch} from "./state/store";
 

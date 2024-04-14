@@ -18,7 +18,7 @@ export type TasksStateType = {
 
 const AppWithRedux = () => {
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchTodolistsTC())
