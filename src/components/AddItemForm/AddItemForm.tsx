@@ -1,8 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@mui/material";
-import {Styles} from './__styles'
+import {Styles} from '../../app/__styles'
 import {PostAdd} from "@mui/icons-material";
-import {useAddItemForm} from "./AddItemForm/useAddItemForm";
+import {useAddItemForm} from "./useAddItemForm";
 
 type AddItemFormPropsType = {
   addItem: (title: string) => void;

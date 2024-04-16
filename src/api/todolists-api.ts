@@ -1,24 +1,5 @@
 import axios from 'axios'
 
-export type TodolistType = {
-  id: string
-  addedDate: string
-  order: number
-  title: string
-};
-
-type ResponseType<D = {}> = {
-  resultCode: number
-  messages: string[]
-  fieldsErrors: FieldErrorType[]
-  data: D
-};
-
-type FieldErrorType = {
-  error: string
-  field: string
-};
-
 const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.1/',
   withCredentials: true,
@@ -27,22 +8,38 @@ const instance = axios.create({
   },
 });
 
+// api
 export const todolistsAPI = {
   getTodolists() {
     return instance.get<Array<TodolistType>>(`todo-lists`)
   },
-
   createTodolist(title: string) {
     return instance.post<ResponseType<{ item: TodolistType }>>(
       `todo-lists`, {title: title})
   },
-
-  deleteTodolist(todolistId: string) {
-    return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
+  deleteTodolist(todoListId: string) {
+    return instance.delete<ResponseType>(`todo-lists/${todoListId}`)
   },
-
-  updateTodolist(todolistId: string, title: string) {
-    return instance.put<ResponseType>(`todo-lists/${todolistId}`,
+  updateTodolist(todoListId: string, title: string) {
+    return instance.put<ResponseType>(`todo-lists/${todoListId}`,
       {title: title})
   }
-}
+};
+
+// types
+export type TodolistType = {
+  id: string
+  addedDate: string
+  order: number
+  title: string
+};
+type ResponseType<D = {}> = {
+  resultCode: number
+  messages: string[]
+  fieldsErrors: FieldErrorType[]
+  data: D
+};
+type FieldErrorType = {
+  error: string
+  field: string
+};

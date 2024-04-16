@@ -1,10 +1,10 @@
 import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "../../state/store";
+import {AppRootStateType, useAppDispatch} from "../store";
 import {useCallback} from "react";
 import {
   addTaskTC,
   updateTaskTC, removeTaskTC
-} from "../../state/tasks-reducer";
+} from "../../features/TodoListList/tasks-reducer";
 import {
   addTodolistTC,
   changeTodolistFilterAC,
@@ -12,32 +12,32 @@ import {
   FilterValueType,
   removeTodolistTC,
   TodolistDomainType
-} from "../../state/todolists-reducer";
-import {TasksStateType} from "../AppWithRedux";
+} from "../../features/TodoListList/todolists-reducer";
+import {TasksStateType} from "../App";
 import {TaskStatuses} from "../../api/tasks-api";
 
-export const useAppWithRedux = () => {
+export const useApp = () => {
   const dispatch = useAppDispatch();
   const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
   const tasksObj = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
 
-  const removeTask = useCallback((taskId: string, todolistId: string) => {
-    const thunk = removeTaskTC(taskId, todolistId);
+  const removeTask = useCallback((taskId: string, todoListId: string) => {
+    const thunk = removeTaskTC(taskId, todoListId);
     dispatch(thunk)
   }, [])
 
-  const addTask = useCallback((title: string, todolistId: string) => {
-    const thunk = addTaskTC(title, todolistId);
+  const addTask = useCallback((title: string, todoListId: string) => {
+    const thunk = addTaskTC(title, todoListId);
     dispatch(thunk)
   }, [])
 
-  const changeTaskStatus = useCallback((taskId: string, status: TaskStatuses, todolistId: string) => {
-    const thunk = updateTaskTC(taskId, {status: status}, todolistId);
+  const changeTaskStatus = useCallback((taskId: string, status: TaskStatuses, todoListId: string) => {
+    const thunk = updateTaskTC(taskId, {status: status}, todoListId);
     dispatch(thunk)
   }, [])
 
-  const changeTaskTitle = useCallback((taskId: string, newTitle: string, todolistId: string) => {
-    const thunk = updateTaskTC(taskId, {title: newTitle}, todolistId);
+  const changeTaskTitle = useCallback((taskId: string, newTitle: string, todoListId: string) => {
+    const thunk = updateTaskTC(taskId, {title: newTitle}, todoListId);
     dispatch(thunk)
   }, [])
 

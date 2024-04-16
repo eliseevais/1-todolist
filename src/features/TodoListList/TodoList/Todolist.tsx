@@ -1,28 +1,28 @@
 import React, {useCallback, useEffect} from 'react';
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
+import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {Styles} from "./__styles";
-import {Task} from "./Task";
-import {TaskStatuses, TaskType} from "./api/tasks-api";
-import {FilterValueType} from "./state/todolists-reducer";
-import {fetchTasksTC} from "./state/tasks-reducer";
-import {useAppDispatch} from "./state/store";
+import {Styles} from "../../../app/__styles";
+import {Task} from "./Task/Task";
+import {TaskStatuses, TaskType} from "../../../api/tasks-api";
+import {FilterValueType} from "../todolists-reducer";
+import {fetchTasksTC} from "../tasks-reducer";
+import {useAppDispatch} from "../../../app/store";
 
 type PropsType = {
   id: string;
   title: string;
   tasks: Array<TaskType>;
-  removeTask: (taskId: string, todolistId: string) => void;
+  removeTask: (taskId: string, todoListId: string) => void;
   changeFilter: (filter: FilterValueType, id: string) => void;
-  addTask: (title: string, todolistId: string) => void;
+  addTask: (title: string, todoListId: string) => void;
   children?: React.ReactNode;
-  changeTaskTitle: (taskId: string, newValue: string, todolistId: string) => void;
-  changeTaskStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void;
+  changeTaskTitle: (taskId: string, newValue: string, todoListId: string) => void;
+  changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void;
   filter: FilterValueType;
-  removeTodolist: (todolistId: string) => void;
-  changeTodolistTitle: (todolistId: string, newTitle: string) => void;
+  removeTodolist: (todoListId: string) => void;
+  changeTodolistTitle: (todoListId: string, newTitle: string) => void;
 }
 
 export const Todolist: React.FC<PropsType> = React.memo(({
@@ -75,7 +75,7 @@ export const Todolist: React.FC<PropsType> = React.memo(({
                 changeTaskTitle={props.changeTaskTitle}
                 changeTaskStatus={props.changeTaskStatus}
                 task={task}
-                todolistId={props.id}
+                todoListId={props.id}
                 key={task.id}
           />
         )}

@@ -1,4 +1,4 @@
-import {TasksStateType} from "../App/App";
+import {TasksStateType} from "../../trash/App/App";
 import {
   addTodolistAC,
   TodolistDomainType,

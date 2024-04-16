@@ -1,6 +1,6 @@
 import {action} from '@storybook/addon-actions'
 import {Task} from "./Task";
-import {TaskPriorities, TaskStatuses} from "./api/tasks-api";
+import {TaskPriorities, TaskStatuses} from "../../../../api/tasks-api";
 
 export default {
   title: 'Task Component',
@@ -16,7 +16,7 @@ export const TaskComponentBaseExample = () => {
         id: '12wsdewfijdei2343',
         title: 'CSS',
         status: TaskStatuses.Completed,
-        todolistId: "todolistId1",
+        todoListId: "todolistId1",
         startDate: '',
         deadline: '',
         addedDate: '',
@@ -27,14 +27,14 @@ export const TaskComponentBaseExample = () => {
       changeTaskStatus={changeTaskStatusCallback}
       changeTaskTitle={changeTaskTitleCallback}
       removeTask={changeRemoveTaskCallback}
-      todolistId={"todolistId1"}
+      todoListId={"todolistId1"}
     />
     <Task
       task={{
         id: '12wsdewfijdei2344',
         title: 'HTML',
         status: TaskStatuses.New,
-        todolistId: "todolistId2",
+        todoListId: "todolistId2",
         startDate: '',
         deadline: '',
         addedDate: '',
@@ -45,7 +45,7 @@ export const TaskComponentBaseExample = () => {
       changeTaskStatus={changeTaskStatusCallback}
       changeTaskTitle={changeTaskTitleCallback}
       removeTask={changeRemoveTaskCallback}
-      todolistId={'todolistId2'}
+      todoListId={'todolistId2'}
     />
   </>
 }
