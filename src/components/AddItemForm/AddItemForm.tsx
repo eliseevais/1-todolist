@@ -26,7 +26,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                  onKeyPress={onKeyPressHandler}
                  error={!!error}
                  helperText={error}
-
+                 style={{marginBottom: '8px'}}
       />
       <IconButton onClick={addTask}
                   style={{

@@ -6,8 +6,8 @@ import {  FilterValueType,  TodolistDomainType} from "../../../features/TodoList
 export function useTodolists(onTodolistRemove: (todoListId: string) => void,
                              onTodolistAdded: (id: string) => void) {
   let [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
-    {id: todolistId01, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-    {id: todolistId02, title: 'What to buy', filter: 'all', order: 0, addedDate: ''},
+    {id: todolistId01, title: 'What to learn', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'},
+    {id: todolistId02, title: 'What to buy', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'},
   ]);
 
   function changeFilter(value: FilterValueType, todoListId: string) {
@@ -39,7 +39,8 @@ export function useTodolists(onTodolistRemove: (todoListId: string) => void,
       filter: "all",
       title: title,
       order: 0,
-      addedDate: ''
+      addedDate: '',
+      entityStatus: 'idle'
     }
     setTodolists([newTodolist, ...todolists]);
     onTodolistAdded(newtodolistId)

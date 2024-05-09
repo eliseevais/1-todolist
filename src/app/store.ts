@@ -9,12 +9,14 @@ import {
 import {AnyAction, applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {useDispatch} from "react-redux";
+import {appReducer} from "./app-reducer";
 
 // объединяем reducers с помощью combineReducers,
 // мы задаем структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
   tasks: tasksReducer,
-  todolists: todolistsReducer
+  todolists: todolistsReducer,
+  app: appReducer
 })
 
 // непосредственно создаем store
