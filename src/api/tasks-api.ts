@@ -14,13 +14,13 @@ export const tasksAPI = {
     return instance.get<GetTasksResponseType>(`todo-lists/${todoListId}/tasks`)
   },
   createTask(todoListId: string, taskTitle: string) {
-    return instance.post<ResponseType<{item: TaskType}>>(`todo-lists/${todoListId}/tasks`, {title: taskTitle})
+    return instance.post<ResponseTypeFromServer<{item: TaskType}>>(`todo-lists/${todoListId}/tasks`, {title: taskTitle})
   },
   deleteTask(todoListId: string, taskId: string) {
-    return instance.delete<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`)
+    return instance.delete<ResponseTypeFromServer>(`todo-lists/${todoListId}/tasks/${taskId}`)
   },
   updateTask(todoListId: string, taskId: string, model: UpdateTasksModelType) {
-    return instance.put<UpdateTasksModelType>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
+    return instance.put<ResponseTypeFromServer<{item: UpdateTasksModelType}>>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
   }
 };
 
@@ -61,9 +61,9 @@ export type UpdateTasksModelType = {
   status: number;
   priority: number;
   startDate: string;
-  deadline: string
+  deadline: string;
 };
-type ResponseType<D = {}> = {
+export type ResponseTypeFromServer<D = {}> = {
   resultCode: number
   messages: string[]
   fieldsErrors: FieldErrorType[]

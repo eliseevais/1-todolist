@@ -12,6 +12,10 @@ import {
 } from "../../app/app-reducer";
 import {Dispatch} from "redux";
 import {TasksStateType} from "../../app/App";
+import {
+  handleNetworkError,
+  handleServerAppError
+} from "../../utils/error-utils";
 
 const initialState: TasksStateType = {};
 
@@ -102,25 +106,20 @@ export const addTaskTC = (title: string, todoListId: string): AppThunk =>
           dispatch(addTaskAC(task));
           dispatch(setAppStatusAC('succeeded'))
         } else {
-          if (res.data.messages.length) {
-            dispatch(setAppErrorAC(res.data.messages[0]))
-          } else {
-            dispatch(setAppErrorAC('some error occurred'))
-          }
-          dispatch(setAppStatusAC('failed'))
+          handleServerAppError(res.data, dispatch)
         }
       })
+      .catch((error) => {
+        handleNetworkError(error, dispatch)
+      })
   };
-export const updateTaskTC = (taskId: string,
-                             domainModel: UpdateDomainTasksModelType,
-                             todoListId: string): AppThunk => {
+export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTasksModelType, todoListId: string): (dispatch: Dispatch<TasksActionsType | AppActionsType>, getState: () => AppRootStateType) => any => {
   return (dispatch: Dispatch<TasksActionsType | AppActionsType>, getState: () => AppRootStateType) => {
 
     const state = getState();
     const task = state.tasks[todoListId].find(t => t.id === taskId);
 
     if (!task) {
-      //throw new Error('task not found in the state');
       console.warn('task not found in the state');
       return
     }
@@ -135,10 +134,18 @@ export const updateTaskTC = (taskId: string,
     }
 
     dispatch(setAppStatusAC('loading'));
-    tasksAPI.updateTask(todoListId, taskId, apiModel)
+    tasksAPI
+      .updateTask(todoListId, taskId, apiModel)
       .then(res => {
-        dispatch(updateTaskAC(taskId, domainModel, todoListId));
-        dispatch(setAppStatusAC('succeeded'))
+        if (res.data.resultCode) {
+          dispatch(updateTaskAC(taskId, domainModel, todoListId));
+          dispatch(setAppStatusAC('succeeded'))
+        } else {
+          handleServerAppError(res.data, dispatch)
+        }
+      })
+      .catch((error) => {
+        handleNetworkError(error, dispatch)
       })
   }
 };
