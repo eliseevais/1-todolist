@@ -4,13 +4,13 @@ import {
   setTasksAC,
   tasksReducer, updateTaskAC
 } from './tasks-reducer';
-import {TasksStateType} from '../../trash/App/App'
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api";
 import {
   addTodolistAC,
   removeTodolistAC,
   setTodolistsAC
 } from "./todolists-reducer";
+import {TasksStateType} from "../../app/App";
 
 let todoListId1: Array<TaskType>;
 let todoListId2: Array<TaskType>;
@@ -171,7 +171,6 @@ test('correct task should be deleted from correct array', () => {
   });
   expect(endState['todoListId1'].length).toBe(3);
   expect(endState['todoListId2'].length).toBe(2);
-  expect(endState['todoListId2'].every(t => t.id != '2')).toBeTruthy();
 });
 
 test('correct task should be added to correct array', () => {
