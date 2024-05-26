@@ -86,6 +86,9 @@ export const fetchTasksTC = (todoListId: string): AppThunk => (dispatch: Dispatc
       dispatch(setTasksAC(tasks, todoListId));
       dispatch(setAppStatusAC('succeeded'));
     })
+    .catch((error) => {
+      handleNetworkError(error, dispatch)}
+    )
 };
 export const removeTaskTC = (taskId: string, todoListId: string): AppThunk =>
   (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {
@@ -95,6 +98,9 @@ export const removeTaskTC = (taskId: string, todoListId: string): AppThunk =>
         dispatch(removeTaskAC(taskId, todoListId));
         dispatch(setAppStatusAC('succeeded'));
       })
+      .catch((error) => {
+        handleNetworkError(error, dispatch)}
+      )
   };
 export const addTaskTC = (title: string, todoListId: string): AppThunk =>
   (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {

@@ -7,6 +7,9 @@ import {
   RequestStatusType,
   setAppStatusAC
 } from "../../app/app-reducer";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import {handleNetworkError} from "../../utils/error-utils";
 
 const initialState: Array<TodolistDomainType> = [];
 export let todolistId1 = v1();
@@ -57,6 +60,9 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch: Dispatch<TodolistActi
       dispatch(setTodolistsAC(res.data));
       dispatch(setAppStatusAC('succeeded'));
     })
+    .catch((error) => {
+      handleNetworkError(error, dispatch)}
+    )
 };
 export const removeTodolistTC = (todoListId: string): AppThunk =>
   (dispatch: Dispatch<TodolistActionsType | AppActionsType>) => {
@@ -67,6 +73,9 @@ export const removeTodolistTC = (todoListId: string): AppThunk =>
         dispatch(removeTodolistAC(todoListId));
         dispatch(setAppStatusAC('succeeded'));
       })
+      .catch((error) => {
+        handleNetworkError(error, dispatch)}
+      )
   };
 export const addTodolistTC = (title: string): AppThunk => (dispatch: Dispatch<TodolistActionsType | AppActionsType>) => {
   dispatch(setAppStatusAC('loading'));
@@ -79,6 +88,9 @@ export const addTodolistTC = (title: string): AppThunk => (dispatch: Dispatch<To
         console.error(res.data.messages[0])
       }
     })
+    .catch((error) => {
+      handleNetworkError(error, dispatch)}
+    )
 };
 export const changeTodolistTitleTC = (id: string, title: string): AppThunk =>
   (dispatch: Dispatch<TodolistActionsType | AppActionsType>) => {
@@ -88,6 +100,9 @@ export const changeTodolistTitleTC = (id: string, title: string): AppThunk =>
         dispatch(changeTodolistTitleAC(id, title));
         dispatch(setAppStatusAC('succeeded'));
       })
+      .catch((error) => {
+        handleNetworkError(error, dispatch)}
+      )
   };
 
 // types

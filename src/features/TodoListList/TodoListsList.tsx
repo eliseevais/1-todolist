@@ -1,10 +1,12 @@
 import {fetchTodolistsTC, TodolistDomainType} from "./todolists-reducer";
 import React, {useEffect} from "react";
-import {useAppDispatch} from "../../app/store";
+import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {useApp} from "../../app/hooks/useApp";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./TodoList/Todolist";
+import {useSelector} from "react-redux";
+import {Navigate} from "react-router-dom";
 
 type TodoListsListPropsType = {
   todoLists?: Array<TodolistDomainType>;
@@ -14,9 +16,10 @@ type TodoListsListPropsType = {
 export const TodoListsList: React.FC<TodoListsListPropsType> = ({demo = false}) => {
 
   const dispatch = useAppDispatch();
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
   useEffect(() => {
-    if (demo) {
+    if (demo || !isLoggedIn) {
       return
     }
     dispatch(fetchTodolistsTC())
@@ -34,6 +37,10 @@ export const TodoListsList: React.FC<TodoListsListPropsType> = ({demo = false}) 
     removeTodolist,
     changeTodolistTitle,
   } = useApp()
+
+  if (!isLoggedIn) {
+    return <Navigate to={'/login'}/>
+  }
 
   return (
     <>

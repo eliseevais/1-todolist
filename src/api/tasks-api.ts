@@ -1,26 +1,18 @@
-import axios from 'axios'
-
-const instance = axios.create({
-  baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-  withCredentials: true,
-  headers: {
-    "API-KEY": "7baa0947-f1d6-498f-bd5d-ed507ad6475a",
-  },
-});
-
 // api
+import {ResponseType, instance} from "../utils/instance";
+
 export const tasksAPI = {
   getTasks(todoListId: string) {
     return instance.get<GetTasksResponseType>(`todo-lists/${todoListId}/tasks`)
   },
   createTask(todoListId: string, taskTitle: string) {
-    return instance.post<ResponseTypeFromServer<{item: TaskType}>>(`todo-lists/${todoListId}/tasks`, {title: taskTitle})
+    return instance.post<ResponseType<{item: TaskType}>>(`todo-lists/${todoListId}/tasks`, {title: taskTitle})
   },
   deleteTask(todoListId: string, taskId: string) {
-    return instance.delete<ResponseTypeFromServer>(`todo-lists/${todoListId}/tasks/${taskId}`)
+    return instance.delete<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`)
   },
   updateTask(todoListId: string, taskId: string, model: UpdateTasksModelType) {
-    return instance.put<ResponseTypeFromServer<{item: UpdateTasksModelType}>>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
+    return instance.put<ResponseType<{item: UpdateTasksModelType}>>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
   }
 };
 
@@ -62,14 +54,4 @@ export type UpdateTasksModelType = {
   priority: number;
   startDate: string;
   deadline: string;
-};
-export type ResponseTypeFromServer<D = {}> = {
-  resultCode: number
-  messages: string[]
-  fieldsErrors: FieldErrorType[]
-  data: D
-};
-type FieldErrorType = {
-  error: string
-  field: string
 };
