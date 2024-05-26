@@ -1,16 +1,16 @@
 import React from 'react'
+import {AppRootStateType} from "../../app/store";
 import Grid from '@mui/material/Grid'
-import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
-import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
 import {useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
 import {Navigate} from "react-router-dom";
 
 export const Login = () => {
@@ -18,32 +18,44 @@ export const Login = () => {
   const dispatch = useDispatch<any>();
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
 
-  if (isLoggedIn) {
-    return <Navigate to={'/'}/>
-  }
-
   const formik = useFormik({
-    validate: (values) => {
-      if (!values.email) {
-        return {
-          email: 'Email is required',
-        }
-      }
-      if (!values.password) {
-        return {
-          password: 'Password is required'
-        }
-      }
-    },
     initialValues: {
       email: '',
       password: '',
       rememberMe: false
     },
+    validate: (values) => {
+      const errors: FormikErrorType = {};
+      // if (!values.email) {
+      //   return {
+      //     email: 'Email is required',
+      //   }
+      // }
+      // if (!values.password) {
+      //   return {
+      //     password: 'Password is required'
+      //   }
+      // }
+      if (!values.email) {
+        errors.email = 'Required'
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+      }
+      if (values.password.length < 6) {
+        errors.password = 'Password should be more than 6 symbols'
+      }
+      return errors
+    },
+
     onSubmit: values => {
-      dispatch(loginTC(values))
+      dispatch(loginTC(values));
+      formik.resetForm()
     },
   });
+
+  if (isLoggedIn) {
+    return <Navigate to={'/'}/>
+  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -66,6 +78,9 @@ export const Login = () => {
               <TextField
                 label="Email"
                 margin="normal"
+                // name="email"
+                // onChange={formik.handleChange}
+                // value={formik.values.email}
                 {...formik.getFieldProps('email')}
               />
               {formik.errors.email ? <div>{formik.errors.email}</div> : null}
@@ -73,16 +88,22 @@ export const Login = () => {
                 type="password"
                 label="Password"
                 margin="normal"
+                // name="password"
+                // onChange={formik.handleChange}
+                // value={formik.values.password}
                 {...formik.getFieldProps('password')}
               />
               {formik.errors.password ?
                 <div>{formik.errors.password}</div> : null}
               <FormControlLabel
                 label={'Remember me'}
-                control={<Checkbox
-                  {...formik.getFieldProps('rememberMe')}
-                  checked={formik.values.rememberMe}
-                />}
+                control={
+                  <Checkbox
+                    checked={formik.values.rememberMe}
+                    // onChange={formik.handleChange}
+                    // name="rememberMe"
+                    {...formik.getFieldProps('rememberMe')}
+                  />}
               />
               <Button type={'submit'} variant={'contained'} color={'primary'}>
                 Login
@@ -94,3 +115,15 @@ export const Login = () => {
     </Grid>
   )
 }
+
+// types
+type FormikErrorType = {
+  email?: string
+  password?: string
+  rememberMe?: boolean
+}
+
+
+// with Dima old version for checkbox
+//  {...formik.getFieldProps('rememberMe')}
+//                   checked={formik.values.rememberMe}

@@ -19,6 +19,7 @@ import {initializedAppTC, RequestStatusType} from "./app-reducer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import {logoutTC} from "../features/Login/auth-reducer";
+import {Outlet} from "react-router-dom";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>
@@ -55,7 +56,7 @@ const App = ({demo = false}: AppPropsType) => {
   }
 
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
       <div className="App">
         <ErrorSnackbar/>
         <AppBar position="static">
@@ -77,14 +78,14 @@ const App = ({demo = false}: AppPropsType) => {
           {status === 'loading' && <LinearProgress/>}
         </AppBar>
         <Container fixed>
-          <Routes>
-            <Route path={'/'} element={<TodoListsList demo={demo}/>}/>
-            <Route path={'/login'} element={<Login/>}/>
-          </Routes>
+          {/*<Routes>*/}
+          {/*  <Route path={'/'} element={<TodoListsList demo={demo}/>}/>*/}
+          {/*  <Route path={'/login'} element={<Login/>}/>*/}
+          {/*</Routes>*/}
+          <Outlet/>
         </Container>
       </div>
-    </BrowserRouter>
-
+    // </BrowserRouter>
   )
 };
 
