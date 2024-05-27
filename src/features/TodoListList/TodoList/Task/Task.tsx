@@ -6,11 +6,11 @@ import {Delete} from "@mui/icons-material";
 import {TaskStatuses, TaskType} from "../../../../api/tasks-api";
 
 type TaskComponentPropsType = {
-  removeTask: (taskId: string, todoListId: string) => void;
-  changeTaskTitle: (taskId: string, newValue: string, todoListId: string) => void;
-  changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void;
   task: TaskType;
   todoListId: string
+  changeTaskTitle: (taskId: string, newValue: string, todoListId: string) => void;
+  changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void;
+  removeTask: (taskId: string, todoListId: string) => void;
 }
 export const Task = React.memo((props: TaskComponentPropsType) => {
   const onRemoveTaskHandler = () => props.removeTask(props.task.id, props.todoListId);

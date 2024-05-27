@@ -143,11 +143,13 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTasksModel
     tasksAPI
       .updateTask(todoListId, taskId, apiModel)
       .then(res => {
-        if (res.data.resultCode) {
+        if (res.data.resultCode === 0) {
           dispatch(updateTaskAC(taskId, domainModel, todoListId));
+          console.log('hello from task')
           dispatch(setAppStatusAC('succeeded'))
         } else {
           handleServerAppError(res.data, dispatch)
+          console.log('hello from task reducer')
         }
       })
       .catch((error) => {

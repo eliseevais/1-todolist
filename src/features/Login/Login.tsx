@@ -1,5 +1,5 @@
 import React from 'react'
-import {AppRootStateType} from "../../app/store";
+import {AppRootStateType, useAppDispatch} from "../../app/store";
 import Grid from '@mui/material/Grid'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
@@ -15,7 +15,7 @@ import {Navigate} from "react-router-dom";
 
 export const Login = () => {
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
 
   const formik = useFormik({
@@ -41,8 +41,8 @@ export const Login = () => {
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address'
       }
-      if (values.password.length < 6) {
-        errors.password = 'Password should be more than 6 symbols'
+      if (values.password.length < 4) {
+        errors.password = 'Password should be more than 4 symbols'
       }
       return errors
     },
@@ -78,9 +78,6 @@ export const Login = () => {
               <TextField
                 label="Email"
                 margin="normal"
-                // name="email"
-                // onChange={formik.handleChange}
-                // value={formik.values.email}
                 {...formik.getFieldProps('email')}
               />
               {formik.errors.email ? <div>{formik.errors.email}</div> : null}
@@ -88,9 +85,6 @@ export const Login = () => {
                 type="password"
                 label="Password"
                 margin="normal"
-                // name="password"
-                // onChange={formik.handleChange}
-                // value={formik.values.password}
                 {...formik.getFieldProps('password')}
               />
               {formik.errors.password ?
@@ -100,8 +94,6 @@ export const Login = () => {
                 control={
                   <Checkbox
                     checked={formik.values.rememberMe}
-                    // onChange={formik.handleChange}
-                    // name="rememberMe"
                     {...formik.getFieldProps('rememberMe')}
                   />}
               />
@@ -122,8 +114,3 @@ type FormikErrorType = {
   password?: string
   rememberMe?: boolean
 }
-
-
-// with Dima old version for checkbox
-//  {...formik.getFieldProps('rememberMe')}
-//                   checked={formik.values.rememberMe}
